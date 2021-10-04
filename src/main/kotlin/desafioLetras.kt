@@ -14,49 +14,51 @@ fun main() {
                 break
             }
         }
-        if (countRepeatWords == listInput.size) { //if validação palavras repetidas
-            for (x in 0..listInput.lastIndex) { // for para imprimir valores da lista formatado
-                print("${listInput[x]} ")
-            }
-            print(".")
-        } else {
-            print("$input.") // se a contagem ficar fora é impressa o input
-        }
+        listInput[listInput.lastIndex] = "${listInput[listInput.lastIndex]}."// substitui ultima palavra da lista
+                                                                             // e coloca junto o ponto ao final da frase
+        checkRepeatedWord(listInput, input)
     } else { // else para textos que contenham uma palavra
-        val wordResult = compareWord(input)
-        input = wordResult
-        print("$input.")
+        containsAWord(input)
     }
+}
+
+private fun checkRepeatedWord(listInput: MutableList<String>, input: String) { //função para verificar se todas palavras da frase são repetidas
+    if (countRepeatWords == listInput.size) { //if validação palavras repetidas
+        for (x in 0..listInput.lastIndex) { // for para imprimir valores da lista
+            print("${listInput[x]} ")
+        }
+    } else {
+        print("$input.") // se a contagem ficar fora é impressa o input
+    }
+}
+
+private fun containsAWord(input: String) {
+    val wordResult = compareWord(input)
+    print("$wordResult.")
 }
 
 fun compareWord(word: String):String {
-   var countWordIndex = 1
-   var result =""
-   for(x in word.length downTo 0 ){
-       val result1 = word.substring(word.length-countWordIndex,word.length)
-       val result2 = word.substring(word.length-(countWordIndex+result1.length),word.length-countWordIndex)
-       if (result1 == result2) {
-           result = word.substring(0, x - 1)
-           countRepeatWords++ // contador de itens que contenha palavras repetidas
-           break
-       } else {
-           countWordIndex++
-       }
+    var countWordIndex = 1
+    var result: String? = null
 
-   }
- return result
-}
-fun wordsCheck(word:String):Boolean{ // checar tamanho da palavra
-    if (word.length < 2){
-        return false
-    } else {
-        return true
+    for(x in word.length downTo 0 ) {
+        val result1 = word.substring(word.length - countWordIndex, word.length)
+        val result2 = word.substring(word.length - (countWordIndex + result1.length), word.length - countWordIndex)
+        if (result1 == result2) {
+            result = word.substring(0, x - 1)
+            countRepeatWords++ // contador de itens que contenha palavras repetidas
+            break
+        } else if(word.length - (countWordIndex + result1.length) == 0) {
+            result = word
+        } else {
+            countWordIndex++
+        }
     }
+    return result ?: word
+}
+fun wordsCheck(word:String): Boolean{ // checar tamanho da palavra
+    return word.length >= 2
 }
 fun listCheck(list: MutableList<String>): Boolean{ // checar tamanho da lista
-    if(list.size < 2){
-        return false
-    } else {
-        return true
-    }
+    return list.size >= 2
 }
