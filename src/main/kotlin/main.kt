@@ -2,7 +2,6 @@ var countRepeatWords = 0
 fun main() {
     print("Entre com o texto: ")
     var input = readLine()
-
     val listInput: MutableList<String> = input?.split(" ") as MutableList<String>
     if (listCheck(listInput)) { // if para textos que contenham mais de uma palavra
         for (x in 0..listInput.lastIndex) {
@@ -15,7 +14,7 @@ fun main() {
             }
         }
         listInput[listInput.lastIndex] = "${listInput[listInput.lastIndex]}."// substitui ultima palavra da lista
-                                                                             // e coloca junto o ponto ao final da frase
+        // e coloca junto o ponto ao final da frase
         checkRepeatedWord(listInput, input)
     } else { // else para textos que contenham uma palavra
         containsAWord(input)
@@ -48,7 +47,7 @@ fun compareWord(word: String):String {
             result = word.substring(0, x - 1)
             countRepeatWords++ // contador de itens que contenha palavras repetidas
             break
-        } else if(word.length - (countWordIndex + result1.length) == 0) {
+        } else if(word.length - (countWordIndex + result1.length) == 0) { // parar se finalizar os indices
             result = word
         } else {
             countWordIndex++
